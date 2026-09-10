@@ -1,45 +1,84 @@
-# Unit 1: Communication Skills–II — Complete Study Cycle
-### IT-402 Class X | Part A (2 marks) | HTML + Markdown only (no PDFs)
+# IT-402 Class X — Communication Skills–II
 
-## The 4-step cycle (follow in order)
+A static study guide covering the five Unit 1 topics through learning, writing,
+practice questions and revision. Start at **index.html**.
 
-| Step | File | What to do |
-|---|---|---|
-| 📖 **LEARN** | `01-Learn-Readable-Summary.html` | Points/tables only. Read once → cover → recall aloud |
-| ✍️ **WRITE** | `02-Write-Question-Bank.html` | 10 starter Q&As: 4 short + 2 long + 2 application + 2 case-study. Cover answers → write → compare |
-| 🎯 **DRILL** | `03-Drill-140-MCQ-Quiz.html` + `03-Drill-140-MCQ-Printable.html` | **140 MCQs**: Book 5 + Extra 15 + Tricky 20 + Methods-2 20 + Feedback-2 20 + Barriers-2 20 + 7Cs-2 20 + Writing-2 20. Interactive + printable with key. Target **125+/140** |
-| ⚡ **REVISE** | `04-Revise-Rapid-Sheet.html` | Whole unit on 1 page + 60-sec self-test. Read 3× on exam morning |
-| 📝 **BANK-151** | `05-Book-Style-150Plus-QBank.html` + `05-Book-Style-150Plus-QBank.md` | **151 book-style Q&As**: 45 Short + 32 Long + 37 Application + 37 Competency (incl. your book's exact questions ⭐) with hidden/click-to-reveal answers |
-| 📚 Reference | `00-Reference-Detailed-Notes.md` | Full deep notes, only if a topic feels weak |
+## Study cycle
 
-## Book topics covered (all 5)
-1. Methods of Communication • 2. Feedback in Communication Cycle • 3. Overcoming Barriers • 4. Principles (7 Cs) • 5. Basic Writing Skills
-
-## Targets
-- Drill: 125–140 = Excellent • 110–124 = Good • Below 110 = re-learn, then retry
-- Bank-151: write answers in a notebook WITHOUT seeing, then reveal & self-mark (do 15–20/day)
-- Rapid sheet: all 8 checkboxes from memory = 2/2 in exam
-
-> All `.html` files work offline — open in any browser. `.md` files are plain-text notes.
-
----
-
-## 🌐 Website (added 10 Sept 2026)
-
-Open **`index.html`** in any browser — or serve the folder (`python3 -m http.server 8000`) and visit `http://localhost:8000`. Fully offline (the only external links are the two official CBSE references on the Syllabus page).
-
-| Page | Source file (copied **verbatim**) |
+| Page | Contents |
 |---|---|
-| `index.html` — home + study cycle | `README.md` (navigation text) |
-| `learn.html` | `01-Learn-Readable-Summary.html` |
-| `write.html` | `02-Write-Question-Bank.html` |
-| `drill.html` — interactive 140-MCQ quiz (score, search, section filter, saved progress) | `03-Drill-140-MCQ-Quiz.html` |
-| `drill-print.html` — printable 140 MCQs + key | `03-Drill-140-MCQ-Printable.html` |
-| `revise.html` — rapid sheet (checkable self-test) | `04-Revise-Rapid-Sheet.html` |
-| `qbank.html` — 151 Q&As (search, type filter, ⭐ book-only) | `05-Book-Style-150Plus-QBank.html` |
-| `reference.html` — detailed notes | `00-Reference-Detailed-Notes.md` |
-| `syllabus.html` — CBSE alignment | `AUDIT-REPORT.md` + official CBSE curriculum |
+| `learn.html` | Readable summary with points and tables |
+| `write.html` | 10 starter questions and model answers |
+| `drill.html` | 140 interactive MCQs; scoring, search, section filter and saved progress |
+| `revise.html` | Rapid revision sheet and eight saved self-test checkboxes |
+| `qbank.html` | 151 Q&As; search, type filter and book-question filter |
+| `reference.html` | Detailed notes, six expanded deep-dive/workshop sections, worked examples and exam guidance |
+| `syllabus.html` | Curriculum alignment and official references |
 
-**Content integrity:** `tools/build_site.py` copies every question, option, answer, explanation and notes line verbatim and then verifies it (140/140 drill texts + keys, 151/151 Q&A texts, type counts 45/32/37/37, 14 ⭐ flags, full text containment for Learn/Write/Revise/Print/Reference, zero "8 parts of speech"). CBSE re-checked on build date against the [official curriculum PDF](https://cbseacademic.nic.in/web_material/Curriculum26/sec/EmployabilitySkills_X.pdf) — the 5 topics match the 5 Learning Outcomes exactly. Only presentation-level touches: shared nav, search/filter tools, dark mode, printable view. One dedupe: the quiz source repeats two section headings back-to-back (duplicate ids); the site renders each once. **Original `00–05` files are unmodified.**
+The duplicate printable drill has been removed from the study cycle. Its two old
+URLs redirect to `drill.html` so bookmarks do not break. The interactive question
+set, 560 options and answer keys are unchanged.
 
-**Rebuild:** `python3 tools/build_site.py` (regenerates all 9 pages from sources; fails loudly if any content drifts).
+## English, Hindi and Hinglish
+
+Use the **language selector in the header**, including on mobile and the 404 page.
+The choice persists across pages when browser storage is available. Switching does
+not reset answers, revealed states, search/filter values, checkboxes or theme.
+
+- English is the original content and works offline.
+- Hindi uses automatic translation. Hinglish uses the provider's Roman Hindi
+  output, which can retain English technical terms; it is not a human-authored
+  conversational adaptation.
+- First-time translations need an internet connection to Google's public
+  translation endpoint (`translate.googleapis.com`). Only public page text is
+  sent; typed searches and the student's selected answers are not sent.
+- Page text, questions, options, hidden explanations, navigation, tooltips and
+  accessibility labels are included. Filenames/code and the language selector's
+  native labels remain unchanged.
+- Completed translations are cached on the device for both languages. Storage
+  limits/private mode may prevent persistent caching. Uncached pages still need
+  internet. No remote translation script or API credentials are used.
+- Progress and a retryable error notice are visible. If the service is blocked,
+  rate-limited or unavailable, untranslated material stays in English; selecting
+  English immediately restores the original. The third-party public endpoint has
+  no availability guarantee.
+- Automatic translations are study aids, **not official CBSE translations**.
+  Check grammar examples, technical terms and answers against the English
+  original; automatic translation can alter language-specific examples.
+
+## Serve and rebuild
+
+```sh
+python3 -m http.server 8000 --bind 0.0.0.0
+python3 tools/build_site.py
+```
+
+The builder regenerates nine site pages and the two redirect stubs. Edit shared
+markup in `tools/templates/`, presentation in `assets/css/site.css`, behaviour in
+`assets/js/`, and detailed notes in `00-Reference-Detailed-Notes.md`.
+The numbered HTML files (other than the retired printable file) are archived
+English source materials, not the shared-shell website.
+
+The build verifies all 140 MCQs and answer keys, 151 Q&As (45 short, 32 long,
+37 application, 37 competency), 14 book flags, all 10 starter answers, and full
+English source-text containment for Learn, Write, Revise and Reference. Existing
+source question/answer text remains intact; the reference source was expanded.
+
+## Browser regression checks
+
+```sh
+pip install playwright
+playwright install chromium
+# With the static server running:
+python3 tools/test_site.py
+# Alternatively set CHROMIUM_PATH to an existing Chromium executable.
+```
+
+Checks cover all nine pages at 320, 375, 768, 1024 and 1440 pixels in all three
+language modes (135 layout combinations), original English restoration,
+mobile-menu keyboard handling, retained quiz/bank state, saved checkboxes,
+language preference, cached switching, service failure and old-URL redirects.
+Translation network responses are mocked with expanded text for deterministic
+layout/behaviour tests; they do not certify live provider availability or
+translation accuracy. No runtime build system or package installation is needed
+to use the website.
