@@ -4,12 +4,15 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Page not found — IT-402 Class X Unit 1</title>
-<meta name="description" content="This page doesn't exist. Jump back into the IT-402 Unit 1 study cycle.">
+<meta name="description" content="Return to the study cycle.">
+<meta property="og:title" content="Page not found — IT-402 Class X Unit 1">
+<meta property="og:description" content="Return to the study cycle.">
+<meta property="og:type" content="website">
 <meta name="theme-color" content="#0f766e">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%230f766e'/%3E%3Ctext x='32' y='42' font-family='Arial' font-size='26' font-weight='bold' fill='white' text-anchor='middle'%3EIT%3C/text%3E%3C/svg%3E">
 <link rel="stylesheet" href="assets/css/site.css">
 </head>
-<body data-page="" class="page-">
+<body data-page="404" class="page-404">
 <a class="skip-link" href="#main">Skip to content</a>
 <header class="site-header">
   <div class="bar">
@@ -17,35 +20,71 @@
       <span class="brand-mark">IT</span>
       <span>IT-402 • Class X<small>Unit 1: Communication Skills–II</small></span>
     </a>
+    <label class="language-control" translate="no"><span class="sr-only">Language / भाषा</span>
+      <select id="languageSelect" aria-label="Language / भाषा">
+        <option value="en">English</option><option value="hi">हिन्दी</option><option value="hinglish">Hinglish</option>
+      </select>
+    </label>
     <button class="icon-btn nav-toggle" id="navToggle" aria-expanded="false" aria-controls="mainNav" aria-label="Open menu">☰</button>
     <nav class="main-nav" id="mainNav" aria-label="Main navigation">
-      <a href="index.html">Home</a>
-      <a href="learn.html">📖 Learn</a>
-      <a href="write.html">✍️ Write</a>
-      <a href="drill.html">🎯 Drill</a>
-      <a href="revise.html">⚡ Revise</a>
-      <a href="qbank.html">📝 Bank-151</a>
-      <a href="reference.html">📚 Notes</a>
-      <a href="syllabus.html">Syllabus</a>
+      <a href="index.html" data-nav="home">Home</a>
+      <a href="learn.html" data-nav="learn">📖 Learn</a>
+      <a href="write.html" data-nav="write">✍️ Write</a>
+      <a href="drill.html" data-nav="drill">🎯 Drill</a>
+      <a href="revise.html" data-nav="revise">⚡ Revise</a>
+      <a href="qbank.html" data-nav="qbank">📝 Bank-151</a>
+      <a href="reference.html" data-nav="reference">📚 Notes</a>
+      <a href="syllabus.html" data-nav="syllabus">Syllabus</a>
       <button class="icon-btn theme-btn" id="themeBtn" aria-label="Toggle dark mode" title="Dark / light mode">🌙</button>
     </nav>
   </div>
 </header>
+<aside class="language-notice container" id="languageNotice" hidden translate="no" aria-label="Translation status">
+  <span id="languageStatus" role="status" aria-live="polite"></span>
+  <button id="translationRetry" type="button" hidden>Retry / फिर कोशिश करें</button>
+</aside>
 <main id="main">
-  <div class="container reading">
-    <div class="section">
-      <div class="notice" style="text-align:center;padding:34px 20px">
-        <h1 style="font-size:40px;margin:0 0 6px">🔍 404</h1>
-        <p style="margin:0 0 16px">That page doesn't exist — but your study cycle is right here:</p>
-        <p style="margin:0;display:flex;gap:10px;justify-content:center;flex-wrap:wrap">
-          <a class="btn btn-brand" href="index.html">🏠 Home</a>
-          <a class="btn btn-ghost" href="drill.html">🎯 Drill 140 MCQs</a>
-          <a class="btn btn-ghost" href="qbank.html">📝 Bank-151</a>
-        </p>
+<div class="container reading section"><h1>404 — Page not found</h1><p>This page does not exist. Continue your study cycle below.</p><a class="btn btn-brand" href="index.html">Back to home</a></div>
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="cols">
+      <div>
+        <h4>IT-402 • Class X — Unit 1</h4>
+        <ul>
+          <li>Communication Skills–II (Part A)</li>
+          <li>140 MCQs • 151 Q&amp;As • 10 starter Q&amp;As</li>
+          <li>English works offline. First-time automatic translations need internet.</li>
+        </ul>
+      </div>
+      <div>
+        <h4>Study cycle</h4>
+        <ul>
+          <li><a href="learn.html">📖 Learn — summary</a></li>
+          <li><a href="write.html">✍️ Write — question bank</a></li>
+          <li><a href="drill.html">🎯 Drill — 140 MCQs</a></li>
+          <li><a href="revise.html">⚡ Revise — rapid sheet</a></li>
+          <li><a href="qbank.html">📝 Bank-151</a> • <a href="reference.html">📚 Detailed notes</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Sources &amp; references</h4>
+        <ul>
+          <li><a href="syllabus.html">CBSE syllabus alignment</a></li>
+          <li><a href="https://cbseacademic.nic.in/web_material/Curriculum26/sec/EmployabilitySkills_X.pdf">Official CBSE curriculum (PDF)</a></li>
+          <li><a href="AUDIT-REPORT.md">Content audit report</a></li>
+          <li><a href="README.md">Study-cycle readme</a></li>
+        </ul>
       </div>
     </div>
+    <p class="fine">English questions and answer keys are preserved from the source study files. Hindi and Hinglish are automatic study aids, not official CBSE translations. Keep English grammar examples and exam terminology in mind.</p>
   </div>
-</main>
+</footer>
+<script src="assets/js/language.js"></script>
 <script src="assets/js/site.js"></script>
+<script>
+(function(){var p="404";var m={home:"home",learn:"learn",write:"write",drill:"drill",print:"drill",revise:"revise",qbank:"qbank",reference:"reference",syllabus:"syllabus"};var a=document.querySelector('[data-nav="'+(m[p]||"")+'"]');if(a)a.classList.add("active");})();
+</script>
 </body>
 </html>

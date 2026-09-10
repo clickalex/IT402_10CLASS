@@ -7,8 +7,8 @@ CONTENT RULE (enforced by verify() below):
     chrome (header/nav/footer/hero/toolbars) is added around it.
   * The only presentation-level fix: the quiz source repeats two section
     headings back-to-back (duplicate ids sec-u1b/sec-u1x); the site renders
-    each heading once. No question/answer text is touched. Originals are never
-    modified.
+    each heading once. No question/answer text is touched. Reference notes are expanded in
+    their Markdown source; the duplicate printable drill is retired.
 
 Usage:  python3 tools/build_site.py
 """
@@ -25,7 +25,6 @@ SRC = {
     "learn": ROOT / "01-Learn-Readable-Summary.html",
     "write": ROOT / "02-Write-Question-Bank.html",
     "quiz": ROOT / "03-Drill-140-MCQ-Quiz.html",
-    "print": ROOT / "03-Drill-140-MCQ-Printable.html",
     "revise": ROOT / "04-Revise-Rapid-Sheet.html",
     "qbank": ROOT / "05-Book-Style-150Plus-QBank.html",
     "ref": ROOT / "00-Reference-Detailed-Notes.md",
@@ -198,7 +197,7 @@ HERO_DRILL = """<div class="page-hero">
   <div class="container">
     <div class="crumbs"><a href="index.html">Home</a> › 🎯 Drill</div>
     <h1>DRILL — 140 MCQs</h1>
-    <p>Book (5) + Extra (15) + Tricky (20) + Methods-2 + Feedback-2 + Barriers-2 + 7Cs-2 + Writing-2 (20 each). Attempt first, then reveal! Prefer pen-and-paper? Use the <a href="drill-print.html" style="color:#fff"><b>printable version with answer key</b></a>.</p>
+    <p>Book (5) + Extra (15) + Tricky (20) + Methods-2 + Feedback-2 + Barriers-2 + 7Cs-2 + Writing-2 (20 each). Attempt first, then reveal. Your answers and progress are saved on this device.</p>
   </div>
 </div>"""
 
@@ -263,25 +262,6 @@ def build_drill():
         "drill",
         "\n".join(parts),
         pager(("write.html", "✍️ Write — question bank"), ("revise.html", "⚡ Revise — rapid sheet")),
-    )
-
-
-# ---------------------------------------------------------------- printable drill (verbatim)
-def build_print():
-    raw = body_inner(read(SRC["print"])).strip()
-    body = (
-        crumbs("🎯 Drill › Printable")
-        + '<div class="container reading"><div class="print-actions">'
-        + '<button class="btn btn-brand" type="button" onclick="window.print()">🖨️ Print / Save as PDF</button>'
-        + '<a class="btn btn-ghost" href="drill.html">← Back to interactive drill</a></div>'
-        + f'<div class="content-print">\n{raw}\n</div></div>'
-    )
-    PAGES["drill-print.html"] = shell(
-        "🖨️ DRILL — 140 MCQs printable + answer key",
-        "Printable Unit 1 drill: all 140 MCQs with circles to attempt, answer key table at the end.",
-        "print",
-        body,
-        pager(("drill.html", "🎯 Drill — interactive"), ("revise.html", "⚡ Revise — rapid sheet")),
     )
 
 
@@ -459,7 +439,7 @@ HERO_REF = """<div class="page-hero hero-ref">
   <div class="container">
     <div class="crumbs"><a href="index.html">Home</a> › 📚 Reference</div>
     <h1>REFERENCE — Detailed Notes</h1>
-    <p>Full deep notes for Unit 1 — open only if a topic feels weak. Source: <b>00-Reference-Detailed-Notes.md</b>, shown here exactly as written.</p>
+    <p>Go beyond memorising: study explanations, worked examples, common mistakes and step-by-step exam answers for all five topics.</p>
   </div>
 </div>"""
 
@@ -532,9 +512,9 @@ def verify():
     check(src_book == qpage.count("tBook"),
           f"book-exact ⭐ flags preserved ({src_book} in questions)")
 
-    # --- learn / write / revise / print: body text containment
+    # --- learn / write / revise: body text containment
     for key, out in (("learn", "learn.html"), ("write", "write.html"),
-                     ("revise", "revise.html"), ("print", "drill-print.html")):
+                     ("revise", "revise.html")):
         src_txt = norm_text(strip_frame_divs(body_inner(read(SRC[key]))))
         # revise ☐ became checkboxes: drop them from comparison (re-collapse)
         src_txt = re.sub(r"\s+", " ", src_txt.replace("☐", " ")).strip()
@@ -590,13 +570,15 @@ def main():
     build_simple("learn", "learn.html", "learn", "📖 Learn")
     build_simple("write", "write.html", "write", "✍️ Write")
     build_drill()
-    build_print()
     build_simple("revise", "revise.html", "revise", "⚡ Revise")
     build_qbank()
     build_reference()
     build_syllabus()
+    PAGES["404.html"] = shell("Page not found", "Return to the study cycle.", "404", '<div class="container reading section"><h1>404 — Page not found</h1><p>This page does not exist. Continue your study cycle below.</p><a class="btn btn-brand" href="index.html">Back to home</a></div>')
     print("Verifying…")
     verify()
+    for old_name in ("drill-print.html", "03-Drill-140-MCQ-Printable.html"):
+        (ROOT / old_name).write_text('<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta http-equiv="refresh" content="0; url=drill.html"><title>Drill has moved</title><link rel="canonical" href="drill.html"><p>The duplicate printable drill has been removed. <a href="drill.html">Open the interactive drill</a>.</p></html>\n', encoding="utf-8")
     for name, html in PAGES.items():
         (ROOT / name).write_text(html, encoding="utf-8")
         print(f"  wrote {name} ({len(html)//1024} KB)")

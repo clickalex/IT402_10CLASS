@@ -20,6 +20,11 @@
       <span class="brand-mark">IT</span>
       <span>IT-402 • Class X<small>Unit 1: Communication Skills–II</small></span>
     </a>
+    <label class="language-control" translate="no"><span class="sr-only">Language / भाषा</span>
+      <select id="languageSelect" aria-label="Language / भाषा">
+        <option value="en">English</option><option value="hi">हिन्दी</option><option value="hinglish">Hinglish</option>
+      </select>
+    </label>
     <button class="icon-btn nav-toggle" id="navToggle" aria-expanded="false" aria-controls="mainNav" aria-label="Open menu">☰</button>
     <nav class="main-nav" id="mainNav" aria-label="Main navigation">
       <a href="index.html" data-nav="home">Home</a>
@@ -34,6 +39,10 @@
     </nav>
   </div>
 </header>
+<aside class="language-notice container" id="languageNotice" hidden translate="no" aria-label="Translation status">
+  <span id="languageStatus" role="status" aria-live="polite"></span>
+  <button id="translationRetry" type="button" hidden>Retry / फिर कोशिश करें</button>
+</aside>
 <main id="main">
 <div class="hero">
   <div class="container">
@@ -71,7 +80,7 @@
         <h3><span class="step">3</span>🎯 DRILL</h3>
         <p>140 MCQs: Book 5 + Extra 15 + Tricky 20 + Methods-2 + Feedback-2 + Barriers-2 + 7Cs-2 + Writing-2 (20 each).</p>
         <p class="target">Target: 125+/140</p>
-        <p class="file-ref">Source: <a href="03-Drill-140-MCQ-Quiz.html"><code>03-…-Quiz.html</code></a> • <a href="03-Drill-140-MCQ-Printable.html"><code>03-…-Printable.html</code></a></p>
+        <p class="file-ref">Source: <a href="03-Drill-140-MCQ-Quiz.html"><code>03-…-Quiz.html</code></a></p>
         <a class="btn btn-brand" href="drill.html">Start quiz</a>
       </article>
       <article class="card c-revise">
@@ -114,7 +123,7 @@
       </div>
       <div class="notice amber">
         <h3>📚 Need full depth?</h3>
-        <p style="margin:0">Open the <a href="reference.html"><b>📚 Reference — Detailed Notes</b></a> (source: <a href="00-Reference-Detailed-Notes.md"><code>00-Reference-Detailed-Notes.md</code></a>) — only if a topic feels weak. Prefer pen-and-paper? Use the <a href="drill-print.html"><b>printable 140-MCQ drill with answer key</b></a>.</p>
+        <p style="margin:0">Open the <a href="reference.html"><b>📚 Reference — Detailed Notes</b></a> (source: <a href="00-Reference-Detailed-Notes.md"><code>00-Reference-Detailed-Notes.md</code></a>) — only if a topic feels weak. Explore worked examples, common mistakes and model exam answers.</p>
       </div>
     </div>
   </section>
@@ -143,7 +152,7 @@
         <ul>
           <li>Communication Skills–II (Part A)</li>
           <li>140 MCQs • 151 Q&amp;As • 10 starter Q&amp;As</li>
-          <li>Works fully offline — no internet needed</li>
+          <li>English works offline. First-time automatic translations need internet.</li>
         </ul>
       </div>
       <div>
@@ -151,13 +160,13 @@
         <ul>
           <li><a href="learn.html">📖 Learn — summary</a></li>
           <li><a href="write.html">✍️ Write — question bank</a></li>
-          <li><a href="drill.html">🎯 Drill — 140 MCQs</a> (<a href="drill-print.html">printable</a>)</li>
+          <li><a href="drill.html">🎯 Drill — 140 MCQs</a></li>
           <li><a href="revise.html">⚡ Revise — rapid sheet</a></li>
           <li><a href="qbank.html">📝 Bank-151</a> • <a href="reference.html">📚 Detailed notes</a></li>
         </ul>
       </div>
       <div>
-        <h4>Sources (unchanged)</h4>
+        <h4>Sources &amp; references</h4>
         <ul>
           <li><a href="syllabus.html">CBSE syllabus alignment</a></li>
           <li><a href="https://cbseacademic.nic.in/web_material/Curriculum26/sec/EmployabilitySkills_X.pdf">Official CBSE curriculum (PDF)</a></li>
@@ -166,9 +175,10 @@
         </ul>
       </div>
     </div>
-    <p class="fine">Book content is shown exactly as in the source study files (verified against the CBSE Class X Employability Skills curriculum). Only layout and navigation were added for the website. Original files: 00–05 + audit report, kept in this repository.</p>
+    <p class="fine">English questions and answer keys are preserved from the source study files. Hindi and Hinglish are automatic study aids, not official CBSE translations. Keep English grammar examples and exam terminology in mind.</p>
   </div>
 </footer>
+<script src="assets/js/language.js"></script>
 <script src="assets/js/site.js"></script>
 <script>
 (function(){var p="home";var m={home:"home",learn:"learn",write:"write",drill:"drill",print:"drill",revise:"revise",qbank:"qbank",reference:"reference",syllabus:"syllabus"};var a=document.querySelector('[data-nav="'+(m[p]||"")+'"]');if(a)a.classList.add("active");})();

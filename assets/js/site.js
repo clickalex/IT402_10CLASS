@@ -39,10 +39,18 @@
       navToggle.setAttribute("aria-expanded", open ? "true" : "false");
     });
     mainNav.addEventListener("click", function (e) {
-      if (e.target.tagName === "A") mainNav.classList.remove("open");
+      if (e.target.closest("a")) {
+        mainNav.classList.remove("open");
+        navToggle.setAttribute("aria-expanded", "false");
+      }
     });
   }
 
+  document.addEventListener("keydown", function (e) {
+    if (e.key === "Escape" && mainNav && mainNav.classList.contains("open")) {
+      mainNav.classList.remove("open"); navToggle.setAttribute("aria-expanded", "false"); navToggle.focus();
+    }
+  });
   var page = document.body.getAttribute("data-page") || "";
 
   /* ================= DRILL (140 MCQ quiz) ================= */
@@ -134,7 +142,7 @@
       revs = {}; store.set(KEY_REV, revs); updateScore();
     });
     document.getElementById("resetAll").addEventListener("click", function () {
-      if (!window.confirm("Reset all answers and revealed states on this device?")) return;
+      if (!window.confirm(window.it402Language.t("Reset all answers and revealed states on this device?"))) return;
       sels = {}; revs = {};
       store.del(KEY_SEL); store.del(KEY_REV);
       qs.forEach(function (q) {
@@ -151,7 +159,7 @@
       var perSec = {};
       qs.forEach(function (q) {
         var okSec = !sec || q.getAttribute("data-sec") === sec;
-        var okTerm = !term || q.textContent.toLowerCase().indexOf(term) !== -1;
+        var okTerm = !term || (q.textContent.toLowerCase().indexOf(term) !== -1 || (q.dataset.searchOriginal || "").indexOf(term) !== -1);
         var show = okSec && okTerm;
         q.classList.toggle("hidden", !show);
         if (show) { visible++; var s = q.getAttribute("data-sec"); perSec[s] = (perSec[s] || 0) + 1; }
@@ -170,6 +178,7 @@
     }
     if (searchEl) searchEl.addEventListener("input", applyFilter);
     if (secEl) secEl.addEventListener("change", applyFilter);
+    document.addEventListener("languagechange", applyFilter);
     updateScore();
   }
 
@@ -229,7 +238,7 @@
       bqs.forEach(function (q) {
         var okT = !type || q.getAttribute("data-type") === type;
         var okB = !book || q.getAttribute("data-book") === "1";
-        var okS = !term || q.textContent.toLowerCase().indexOf(term) !== -1;
+        var okS = !term || (q.textContent.toLowerCase().indexOf(term) !== -1 || (q.dataset.searchOriginal || "").indexOf(term) !== -1);
         var show = okT && okB && okS;
         q.classList.toggle("hidden", !show);
         if (show) { visible++; var s = q.getAttribute("data-sec"); perSec[s] = (perSec[s] || 0) + 1; }
@@ -247,6 +256,7 @@
     if (bSearch) bSearch.addEventListener("input", bFilter);
     if (typeEl) typeEl.addEventListener("change", bFilter);
     if (bookEl) bookEl.addEventListener("change", bFilter);
+    document.addEventListener("languagechange", bFilter);
     bCount();
   }
 

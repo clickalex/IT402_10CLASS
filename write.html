@@ -20,6 +20,11 @@
       <span class="brand-mark">IT</span>
       <span>IT-402 • Class X<small>Unit 1: Communication Skills–II</small></span>
     </a>
+    <label class="language-control" translate="no"><span class="sr-only">Language / भाषा</span>
+      <select id="languageSelect" aria-label="Language / भाषा">
+        <option value="en">English</option><option value="hi">हिन्दी</option><option value="hinglish">Hinglish</option>
+      </select>
+    </label>
     <button class="icon-btn nav-toggle" id="navToggle" aria-expanded="false" aria-controls="mainNav" aria-label="Open menu">☰</button>
     <nav class="main-nav" id="mainNav" aria-label="Main navigation">
       <a href="index.html" data-nav="home">Home</a>
@@ -34,6 +39,10 @@
     </nav>
   </div>
 </header>
+<aside class="language-notice container" id="languageNotice" hidden translate="no" aria-label="Translation status">
+  <span id="languageStatus" role="status" aria-live="polite"></span>
+  <button id="translationRetry" type="button" hidden>Retry / फिर कोशिश करें</button>
+</aside>
 <main id="main">
 <div class="container reading"><nav aria-label="Breadcrumb" class="small" style="margin:14px 0 4px"><a href="index.html">Home</a> › ✍️ Write</nav></div>
 <div class="container reading"><div class="content-write">
@@ -87,7 +96,7 @@
         <ul>
           <li>Communication Skills–II (Part A)</li>
           <li>140 MCQs • 151 Q&amp;As • 10 starter Q&amp;As</li>
-          <li>Works fully offline — no internet needed</li>
+          <li>English works offline. First-time automatic translations need internet.</li>
         </ul>
       </div>
       <div>
@@ -95,13 +104,13 @@
         <ul>
           <li><a href="learn.html">📖 Learn — summary</a></li>
           <li><a href="write.html">✍️ Write — question bank</a></li>
-          <li><a href="drill.html">🎯 Drill — 140 MCQs</a> (<a href="drill-print.html">printable</a>)</li>
+          <li><a href="drill.html">🎯 Drill — 140 MCQs</a></li>
           <li><a href="revise.html">⚡ Revise — rapid sheet</a></li>
           <li><a href="qbank.html">📝 Bank-151</a> • <a href="reference.html">📚 Detailed notes</a></li>
         </ul>
       </div>
       <div>
-        <h4>Sources (unchanged)</h4>
+        <h4>Sources &amp; references</h4>
         <ul>
           <li><a href="syllabus.html">CBSE syllabus alignment</a></li>
           <li><a href="https://cbseacademic.nic.in/web_material/Curriculum26/sec/EmployabilitySkills_X.pdf">Official CBSE curriculum (PDF)</a></li>
@@ -110,9 +119,10 @@
         </ul>
       </div>
     </div>
-    <p class="fine">Book content is shown exactly as in the source study files (verified against the CBSE Class X Employability Skills curriculum). Only layout and navigation were added for the website. Original files: 00–05 + audit report, kept in this repository.</p>
+    <p class="fine">English questions and answer keys are preserved from the source study files. Hindi and Hinglish are automatic study aids, not official CBSE translations. Keep English grammar examples and exam terminology in mind.</p>
   </div>
 </footer>
+<script src="assets/js/language.js"></script>
 <script src="assets/js/site.js"></script>
 <script>
 (function(){var p="write";var m={home:"home",learn:"learn",write:"write",drill:"drill",print:"drill",revise:"revise",qbank:"qbank",reference:"reference",syllabus:"syllabus"};var a=document.querySelector('[data-nav="'+(m[p]||"")+'"]');if(a)a.classList.add("active");})();
