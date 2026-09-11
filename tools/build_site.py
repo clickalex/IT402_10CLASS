@@ -7,8 +7,8 @@ CONTENT RULE (enforced by verify() below):
     chrome (header/nav/footer/hero/toolbars) is added around it.
   * The only presentation-level fix: the quiz source repeats two section
     headings back-to-back (duplicate ids sec-u1b/sec-u1x); the site renders
-    each heading once. No question/answer text is touched. Reference notes are expanded in
-    their Markdown source; the duplicate printable drill is retired.
+    each heading once. No question/answer text is touched. The duplicate printable
+    drill is retired.
 
 Usage:  python3 tools/build_site.py
 """
@@ -27,7 +27,6 @@ SRC = {
     "quiz": ROOT / "03-Drill-140-MCQ-Quiz.html",
     "revise": ROOT / "04-Revise-Rapid-Sheet.html",
     "qbank": ROOT / "05-Book-Style-150Plus-QBank.html",
-    "ref": ROOT / "00-Reference-Detailed-Notes.md",
 }
 
 PAGES = {}  # name -> html, filled by builders
@@ -336,129 +335,7 @@ def build_qbank():
         "151 book-style Q&As: 45 short + 32 long + 37 application + 37 competency with click-to-reveal answers, search and filters.",
         "qbank",
         "\n".join(parts),
-        pager(("revise.html", "⚡ Revise — rapid sheet"), ("reference.html", "📚 Reference — detailed notes")),
-    )
-
-
-# ---------------------------------------------------------------- reference (MD -> HTML, verbatim text)
-def md_inline(s):
-    s = s.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
-    s = s.replace("[ ]", "☐")
-    s = re.sub(r"\*\*(.+?)\*\*", r"<strong>\1</strong>", s)
-    s = re.sub(r"(?<!\*)\*(?!\*)(.+?)(?<!\*)\*(?!\*)", r"<em>\1</em>", s)
-    return s
-
-
-def md_table(rows):
-    def cells(r):
-        return [c.strip() for c in r.strip().strip("|").split("|")]
-
-    head = cells(rows[0])
-    out = ["<div class=\"tbl-wrap\"><table>"]
-    out.append("<tr>" + "".join(f"<th>{md_inline(c)}</th>" for c in head) + "</tr>")
-    for r in rows[2:]:  # skip alignment row
-        out.append("<tr>" + "".join(f"<td>{md_inline(c)}</td>" for c in cells(r)) + "</tr>")
-    out.append("</table></div>")
-    return "\n".join(out)
-
-
-def md_to_html(md):
-    lines, out, toc = md.splitlines(), [], []
-    i, h2n, first_h3 = 0, 0, True
-    while i < len(lines):
-        ln = lines[i]
-        s = ln.strip()
-        if not s:
-            i += 1
-            continue
-        if s.startswith("### "):
-            txt = s[4:]
-            if first_h3:
-                out.append(f'<h3 class="subtitle">{md_inline(txt)}</h3>')
-                first_h3 = False
-            else:
-                out.append(f"<h3>{md_inline(txt)}</h3>")
-            i += 1
-            continue
-        if s.startswith("## "):
-            h2n += 1
-            txt, slug = s[3:], f"ref-{h2n}"
-            toc.append((slug, txt))
-            out.append(f'<h2 id="{slug}">{md_inline(txt)}</h2>')
-            i += 1
-            continue
-        if s.startswith("# "):
-            out.append(f"<h1>{md_inline(s[2:])}</h1>")
-            i += 1
-            continue
-        if s == "---":
-            out.append("<hr>")
-            i += 1
-            continue
-        if s.startswith("|"):
-            j = i
-            while j < len(lines) and lines[j].strip().startswith("|"):
-                j += 1
-            out.append(md_table(lines[i:j]))
-            i = j
-            continue
-        if s.startswith("> "):
-            buf = []
-            while i < len(lines) and lines[i].strip().startswith("> "):
-                buf.append(lines[i].strip()[2:])
-                i += 1
-            out.append("<blockquote>" + " ".join(md_inline(x) for x in buf) + "</blockquote>")
-            continue
-        if s.startswith("- "):
-            buf = []
-            while i < len(lines) and lines[i].strip().startswith("- "):
-                buf.append(lines[i].strip()[2:])
-                i += 1
-            out.append("<ul>" + "".join(f"<li>{md_inline(x)}</li>" for x in buf) + "</ul>")
-            continue
-        if re.match(r"^\d+\.\s", s):
-            buf = []
-            while i < len(lines) and re.match(r"^\d+\.\s", lines[i].strip()):
-                buf.append(re.sub(r"^\d+\.\s", "", lines[i].strip()))
-                i += 1
-            out.append("<ol>" + "".join(f"<li>{md_inline(x)}</li>" for x in buf) + "</ol>")
-            continue
-        buf = []
-        while i < len(lines):
-            t = lines[i].strip()
-            if (not t or t.startswith(("#", "|", "> ", "- ", "---"))
-                    or re.match(r"^\d+\.\s", t)):
-                break
-            buf.append(t)
-            i += 1
-        out.append("<p>" + " ".join(md_inline(x) for x in buf) + "</p>")
-    return "\n".join(out), toc
-
-
-HERO_REF = """<div class="page-hero hero-ref">
-  <div class="container">
-    <div class="crumbs"><a href="index.html">Home</a> › 📚 Reference</div>
-    <h1>REFERENCE — Detailed Notes</h1>
-    <p>Go beyond memorising: study explanations, worked examples, common mistakes and step-by-step exam answers for all five topics.</p>
-  </div>
-</div>"""
-
-
-def build_reference():
-    md = read(SRC["ref"])
-    article, toc = md_to_html(md)
-    print(f"  reference: {len(toc)} sections in TOC")
-    toc_html = ('<nav class="toc" aria-label="Notes contents"><b>On this page</b><ol>'
-                + "".join(f'<li><a href="#{slug}">{md_inline(t)}</a></li>' for slug, t in toc)
-                + "</ol></nav>")
-    body = (HERO_REF + '<div class="container reading">' + toc_html
-            + f'<article class="ref">\n{article}\n</article></div>')
-    PAGES["reference.html"] = shell(
-        "📚 REFERENCE — Detailed Notes (Unit 1)",
-        "Full detailed notes for Unit 1: all 5 topics plus exam Q&A and final checklist.",
-        "reference",
-        body,
-        pager(("qbank.html", "📝 Bank-151"), ("syllabus.html", "CBSE syllabus alignment")),
+        pager(("revise.html", "⚡ Revise — rapid sheet"), ("syllabus.html", "CBSE syllabus alignment")),
     )
 
 
@@ -470,7 +347,7 @@ def build_syllabus():
         "How the Unit 1 content maps to the official CBSE Employability Skills-X Learning Outcomes.",
         "syllabus",
         body,
-        pager(("reference.html", "📚 Reference — detailed notes"), ("index.html", "🏠 Back to home")),
+        pager(("qbank.html", "📝 Bank-151"), ("index.html", "🏠 Back to home")),
     )
 
 
@@ -526,29 +403,6 @@ def verify():
                 bad += 1
         check(bad == 0, f"{out}: source text fully contained ({len(words)} words, {bad} drifted chunks)")
 
-    # --- reference: every MD line's text present
-    md = read(SRC["ref"]).splitlines()
-    out_txt = re.sub(r"\s+", " ", norm_text(PAGES["reference.html"]).replace("|", " ")).strip()
-    miss = 0
-    for ln in md:
-        s = ln.strip()
-        if not s or s == "---":
-            continue
-        s = re.sub(r"^#{1,3}\s+", "", s)
-        s = re.sub(r"^\d+\.\s+", "", s)
-        s = re.sub(r"^-\s+(\[ \]\s*)?", "", s)
-        s = re.sub(r"^>\s+", "", s)
-        s = re.sub(r"^\|", "", s).replace("|", " ")
-        s = s.replace("*", "").replace("[ ]", "☐")
-        s = re.sub(r"\s+", " ", s).strip()
-        if s == "---".strip("-") or set(s) <= {"-", " ", "☐"}:
-            continue
-        if s and s not in out_txt:
-            miss += 1
-            if miss <= 3:
-                print("    missing ref line:", s[:100])
-    check(miss == 0, f"reference.html contains all MD lines ({miss} missing)")
-
     # --- forbidden strings (audit guarantees)
     for name, html in PAGES.items():
         check("8 parts of speech" not in html, f"{name}: no '8 parts of speech'")
@@ -572,13 +426,10 @@ def main():
     build_drill()
     build_simple("revise", "revise.html", "revise", "⚡ Revise")
     build_qbank()
-    build_reference()
     build_syllabus()
     PAGES["404.html"] = shell("Page not found", "Return to the study cycle.", "404", '<div class="container reading section"><h1>404 — Page not found</h1><p>This page does not exist. Continue your study cycle below.</p><a class="btn btn-brand" href="index.html">Back to home</a></div>')
     print("Verifying…")
     verify()
-    for old_name in ("drill-print.html", "03-Drill-140-MCQ-Printable.html"):
-        (ROOT / old_name).write_text('<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta http-equiv="refresh" content="0; url=drill.html"><title>Drill has moved</title><link rel="canonical" href="drill.html"><p>The duplicate printable drill has been removed. <a href="drill.html">Open the interactive drill</a>.</p></html>\n', encoding="utf-8")
     for name, html in PAGES.items():
         (ROOT / name).write_text(html, encoding="utf-8")
         print(f"  wrote {name} ({len(html)//1024} KB)")
