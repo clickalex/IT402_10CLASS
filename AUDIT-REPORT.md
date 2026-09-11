@@ -54,3 +54,26 @@ Quiz 140/140 unique + valid keys • Printable 140 Qs + 140 key rows • QBank H
 Active ↔ passive sentences; direct/indirect objects; TINS capitalization acronym. Low exam priority since the official theory list omits them.
 
 *New Writing-2 key segment (Q121–140): 1,1,2,0,0,1,1,2,1,1,1,3,2,1,1,0,1,1,1,0*
+
+## Follow-up audit — references link removed & dead files deleted (10 Sept 2026)
+
+**Scope:** remove the References/Notes link from the home page (nav, "Need full depth?" box, footer), retire the reference page site-wide, and delete all unused HTML/MD files.
+
+**Removed from the home page:** the "📚 Notes" nav link, the "📚 Need full depth?" notice (linked `reference.html` and `00-Reference-Detailed-Notes.md`), and the footer "📚 Detailed notes" link. The "📚 Notes" nav link, pager entries and footer link were also removed from `learn`, `write`, `drill`, `revise`, `qbank`, `syllabus` and `404` so no page links to a deleted file.
+
+**Files deleted (unused after the link removal):**
+- `reference.html` — the detailed-notes page (no remaining link target)
+- `00-Reference-Detailed-Notes.md` — its Markdown source
+- `drill-print.html` and `03-Drill-140-MCQ-Printable.html` — retired redirect stubs (nothing linked them; their old URLs now return the 404 page)
+- `AUDIT-2026-09-11.md` — unlinked pre-merge audit file, replaced by this section
+
+**Kept (still in use):** the eight site pages, the archived numbered source files `01`–`05` (linked from the home-page "Source:" lines and consumed by the builder), `README.md`, `AUDIT-REPORT.md`, `assets/`, and `tools/` (updated: builder no longer generates the reference page or the stubs, pagers now run learn → write → drill → revise → qbank → syllabus → home, and the test suite expects 8 pages + legacy-URL 404s).
+
+**Verification results (script-checked, 10 Sept 2026):**
+- `python3 tools/build_site.py`: all content checks passed (140 MCQs + 560 options + keys, 151 Q&As = 45/32/37/37, 14 book flags, 10 starter Q&As, Learn/Write/Revise source-text containment); rebuilt 8 pages.
+- Rebuilding again produced identical SHA-256 hashes for all pages (deterministic).
+- Static link audit over the 8 site pages: 198 internal links + 24 in-page fragments all resolve; element IDs unique per page; zero lingering references to the five removed files in any live HTML/JS/CSS/Python file (only the intentional legacy-404 assertions in `tools/test_site.py`).
+- Nav, footer and the active-link JS map are identical on all 8 pages; pager chain verified linear with no dangling links.
+- `node --check` passed for both JavaScript files; `python3 -m py_compile` passed for both build scripts; `git diff --check` clean.
+
+**Known limitation:** the Playwright/Chromium regression suite (8 pages × 3 languages × 5 widths = 120 layouts) could not be run in this sandbox — the Playwright CDN is network-blocked, as in the previous audit. This change touches only shared chrome (nav/pager/footer/hero) and no CSS or JavaScript logic, so layout/translation behaviour is unchanged; the suite is updated and ready to run where the network allows.

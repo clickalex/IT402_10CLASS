@@ -12,7 +12,7 @@ from urllib.parse import parse_qs, urlparse
 from playwright.sync_api import sync_playwright
 
 BASE = os.environ.get('SITE_URL', 'http://127.0.0.1:8000')
-PAGES = ['index', 'learn', 'write', 'drill', 'revise', 'qbank', 'reference', 'syllabus', '404']
+PAGES = ['index', 'learn', 'write', 'drill', 'revise', 'qbank', 'syllabus', '404']
 
 
 def mock_translation(route):
@@ -124,9 +124,9 @@ with sync_playwright() as p:
     fail_page.select_option('#languageSelect', 'en')
     assert fail_page.locator('#languageNotice').is_hidden()
     assert fail_page.locator('html').get_attribute('lang') == 'en'
-    for old in ['drill-print', '03-Drill-140-MCQ-Printable']:
-        fail_page.goto(f'{BASE}/{old}.html')
-        fail_page.wait_for_url('**/drill.html')
+    for old in ['drill-print', '03-Drill-140-MCQ-Printable', 'reference']:
+        resp = fail_page.goto(f'{BASE}/{old}.html')
+        assert resp.status == 404, f'legacy {old}.html must 404, got {resp.status}'
     assert not errors, errors
     browser.close()
-    print(f'PASS: {checks} page/language/viewport layouts; navigation, drill, bank, checklist, cache, fallback and redirects.')
+    print(f'PASS: {checks} page/language/viewport layouts; navigation, drill, bank, checklist, cache, fallback and legacy-URL 404s.')

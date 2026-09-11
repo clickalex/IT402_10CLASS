@@ -12,12 +12,11 @@ practice questions and revision. Start at **index.html**.
 | `drill.html` | 140 interactive MCQs; scoring, search, section filter and saved progress |
 | `revise.html` | Rapid revision sheet and eight saved self-test checkboxes |
 | `qbank.html` | 151 Q&As; search, type filter and book-question filter |
-| `reference.html` | Detailed notes, six expanded deep-dive/workshop sections, worked examples and exam guidance |
 | `syllabus.html` | Curriculum alignment and official references |
 
-The duplicate printable drill has been removed from the study cycle. Its two old
-URLs redirect to `drill.html` so bookmarks do not break. The interactive question
-set, 560 options and answer keys are unchanged.
+The duplicate printable drill and the former detailed-notes page were removed
+from the study cycle; their old URLs now return the 404 page. The interactive
+question set, 560 options and answer keys are unchanged.
 
 ## English, Hindi and Hinglish
 
@@ -53,16 +52,15 @@ python3 -m http.server 8000 --bind 0.0.0.0
 python3 tools/build_site.py
 ```
 
-The builder regenerates nine site pages and the two redirect stubs. Edit shared
-markup in `tools/templates/`, presentation in `assets/css/site.css`, behaviour in
-`assets/js/`, and detailed notes in `00-Reference-Detailed-Notes.md`.
-The numbered HTML files (other than the retired printable file) are archived
-English source materials, not the shared-shell website.
+The builder regenerates the eight site pages. Edit shared markup in
+`tools/templates/`, presentation in `assets/css/site.css` and behaviour in
+`assets/js/`. The numbered HTML files (other than the retired printable file)
+are archived English source materials, not the shared-shell website.
 
 The build verifies all 140 MCQs and answer keys, 151 Q&As (45 short, 32 long,
 37 application, 37 competency), 14 book flags, all 10 starter answers, and full
-English source-text containment for Learn, Write, Revise and Reference. Existing
-source question/answer text remains intact; the reference source was expanded.
+English source-text containment for Learn, Write and Revise. Existing source
+question/answer text remains intact.
 
 ## Browser regression checks
 
@@ -74,10 +72,10 @@ python3 tools/test_site.py
 # Alternatively set CHROMIUM_PATH to an existing Chromium executable.
 ```
 
-Checks cover all nine pages at 320, 375, 768, 1024 and 1440 pixels in all three
-language modes (135 layout combinations), original English restoration,
+Checks cover all eight pages at 320, 375, 768, 1024 and 1440 pixels in all three
+language modes (120 layout combinations), original English restoration,
 mobile-menu keyboard handling, retained quiz/bank state, saved checkboxes,
-language preference, cached switching, service failure and old-URL redirects.
+language preference, cached switching, service failure and legacy-URL 404s.
 Translation network responses are mocked with expanded text for deterministic
 layout/behaviour tests; they do not certify live provider availability or
 translation accuracy. No runtime build system or package installation is needed
